@@ -1,38 +1,20 @@
-.App {
-  text-align: center;
-}
+/* body {
+  background-image: url('./assets/referee-web-bg.svg');
+} */
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+.login-container {
+  border: 1px thin #707070;
+  border-radius: 30px;
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
+  background-color: #FFF;
+  width: 450px;
+  height: 300px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }

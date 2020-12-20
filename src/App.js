@@ -1,25 +1,31 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
 
+import Login from './components/Login'
+import Offer from './components/Offers'
+
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [screen, setScreen] = React.useState('login')
+
+  const handleScreen = (arg) => {
+    setScreen(arg)
+  }
+
+  if (screen === 'login') {
+    return (
+      <div className="App">
+        <Login handleScreen={handleScreen('offer')}/>
+      </div>
+    )
+  }
+  else if (screen === 'offer') {
+    return (
+      <div>
+        <Offer />
+      </div>
+    )
+  }
+
 }
 
 export default App;
