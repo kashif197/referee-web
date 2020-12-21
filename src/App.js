@@ -3,28 +3,36 @@ import './App.css';
 
 import Login from './components/Login'
 import Offer from './components/Offers'
-
+import AddOffer from './components/AddOffer'
+import EditOffer from './components/EditOffer';
 function App() {
-  const [screen, setScreen] = React.useState('login')
+  return (
+    <div>
+      {/* <AddOffer /> */}
+      <EditOffer />
+    </div>
+  )
 
-  const handleScreen = (arg) => {
-    setScreen(arg)
-  }
+  // const [screen, setScreen] = React.useState('login')
 
-  if (screen === 'login') {
-    return (
-      <div className="App">
-        <Login handleScreen={handleScreen('offer')}/>
-      </div>
-    )
-  }
-  else if (screen === 'offer') {
-    return (
-      <div>
-        <Offer />
-      </div>
-    )
-  }
+  // const handleScreen = (arg) => {
+  //   setScreen(arg)
+  // }
+
+  // if (screen === 'login') {
+  //   return (
+  //     <div className="App">
+  //       <Login handleScreen={handleScreen('offer')}/>
+  //     </div>
+  //   )
+  // }
+  // else if (screen === 'offer') {
+  //   return (
+  //     <div>
+  //       <Offer />
+  //     </div>
+  //   )
+  // }
 
 }
 
