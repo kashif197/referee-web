@@ -2,7 +2,41 @@
   background-image: url('./assets/referee-web-bg.svg');
 } */
 
+.button-container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%); 
+
+  display: flex;
+  flex-direction: column;
+}
+
+.add-container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%); 
+}
+
 .login-container {
+  border: 1px thin #707070;
+  border-radius: 30px;
+
+  background-color: #FFF;
+  width: 450px;
+  height: 300px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.signup-container {
   border: 1px thin #707070;
   border-radius: 30px;
 
@@ -28,6 +62,7 @@
 
   display: flex;
   justify-content: center;
+
 }
 
 .add-button {

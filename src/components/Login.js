@@ -5,7 +5,10 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 
 import 'fontsource-roboto';
-import { makeStyles } from '@material-ui/core';
+import { IconButton, makeStyles } from '@material-ui/core';
+
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+
 
 const useStyles = makeStyles(theme => ({
   fieldStyle: {
@@ -21,7 +24,9 @@ const useStyles = makeStyles(theme => ({
     fontFamily: 'Segoe UI',
     fontWeight: 'bold',
     '&:hover': {
-      color: '#2EC4B6'
+      color: '#2EC4B6',
+      backgroundColor: '#fff',
+      border: '2px solid #2EC4B6'
     }
   }
 }))
@@ -51,14 +56,20 @@ function Login(props) {
       })
         .then(res => res.json())
         .then(data => {
-          setUserData({
-            status: data.status,
-            name: data.name,
-            id: data.id,
-            token: data.token
-          })
+          if (data.status === 0) {
+            alert(data.message)
+          }
+          else {
+            setUserData({
+              status: data.status,
+              name: data.name,
+              id: data.id,
+              token: data.token
+            })
+          }
+
         })
-        .catch(err => console.log(err))
+        .catch(err => console.log('There was no response from the server.'))
     }
 
   }
@@ -88,6 +99,11 @@ function Login(props) {
 
   return (
     <div className="login-container">
+      <span className="back-button">
+        <IconButton onClick={() => props.handleScreen('home')}>
+          <ArrowBackIcon />
+        </IconButton>
+      </span>
       <Grid container spacing={2} direction="column" alignItems="center">
         <Grid item>
           <TextField className={classes.fieldStyle} variant="outlined" label="Email Address" onChange={handleEmail}

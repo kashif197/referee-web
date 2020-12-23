@@ -8,8 +8,10 @@ import makeStyles from '@material-ui/styles/makeStyles'
 
 import logo from '../assets/referee-web-bg.svg'
 
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+
 import 'fontsource-roboto';
-import { CardActionArea, CardContent, CardMedia, CardActions } from '@material-ui/core';
+import { CardActionArea, CardContent, CardMedia, CardActions, IconButton } from '@material-ui/core';
 
 const useStyles = makeStyles({
     cardStyle: {
@@ -21,76 +23,124 @@ const useStyles = makeStyles({
     },
     buttonStyle: {
         margin: 10
+    },
+    boxButton: {
+        color: '#fff',
+        backgroundColor: '#2EC4B6',
+        fontFamily: 'Segoe UI',
+        fontWeight: 'bold',
+        margin: 5,
+        '&:hover': {
+            color: '#2EC4B6',
+            backgroundColor: '#fff',
+            border: '2px solid #2EC4B6'
+
+        }
     }
 })
 
-const offerArray = [
-    {
-        "_id": "5fe113db66437242f0953321",
-        "business_id": "5fe0a6e2c82b6a31dc591bc8",
-        "campaign_name": "Offer One",
-        "headline": "Earn 5% On Sale of PKR 10,000",
-        "live_date": "2020-12-21T21:30:03.842Z",
-        "expiry_date": "2020-12-21T21:30:03.842Z",
-        "commission_based": true,
-        "commission_value": 5,
-        "target_transaction": 5,
-        "description": "Make some money with Zombie Burger!",
-        "__v": 0
-    },
-    {
-        "_id": "5fe1142a66437242f0953322",
-        "business_id": "5fe0a6e2c82b6a31dc591bc8",
-        "campaign_name": "Offer Two",
-        "headline": "Sell Ten Zingers Get One Free",
-        "live_date": "2020-12-21T21:31:22.270Z",
-        "expiry_date": "2020-12-21T21:31:22.270Z",
-        "commission_based": false,
-        "commission_value": 0,
-        "target_transaction": 10,
-        "description": "Here is a zinger on the house!",
-        "__v": 0
-    }
-]
 
 
 function Offers(props) {
-    
+
+    const [offers, setOffers] = React.useState('')
     const classes = useStyles()
-    return (
-        <div><span className="add-button">
-            <Button className={classes.buttonStyle} variant="outlined" color="primary" size="medium" onClick={() => props.handleScreen('add')}>Add Offer</Button>
-        </span>
-            <div className="offers-container">
-                {offerArray.map(item => (
-                    <Card className={classes.cardStyle}>
-                        <CardActionArea>
-                            <CardMedia
-                                className={classes.mediaStyle}
-                                image={logo}
-                                title={item.name}
-                            />
-                            <CardContent>
-                                <Typography variant="h5" gutterBottom>
-                                    {item.headline}
-                                </Typography>
-                                <Typography variant="body2">
-                                    {item.description}
-                                </Typography>
-                            </CardContent>
-                        </CardActionArea>
-                        <CardActions>
-                            <Button size="small" color="primary">
-                                Edit
-                    </Button>
-                            <Button size="small" color="primary">
-                                Delete
-                    </Button>
-                        </CardActions>
-                    </Card>
-                ))}
+
+    function deleteOffer(token, id) {
+        fetch("http://localhost:5000/offer/deleteOffer/" + id, {
+            method: "DELETE",
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        })
+            .then((res) => res.json())
+            .then((Json) => {
+                if (Json.success) {
+                    alert('Offer Deleted')
+                    getOffers(props.userData.id, props.userData.token)
+                }
+
+            })
+            .catch((err) => console.log(err));
+    }
+
+    function getOffers(id, token) {
+        fetch('http://localhost:5000/offer/find/' + id, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(Json => {
+                setOffers(Json)
+            })
+            .catch(err => console.log(err))
+    }
+
+    if (offers === '') {
+        getOffers(props.userData.id, props.userData.token)
+
+
+        return <div></div>
+    }
+
+    else {
+        return (
+            <div>
+                <span className="back-button">
+                    <IconButton onClick={() => props.handleScreen('home')}>
+                        <ArrowBackIcon />
+                    </IconButton>
+                </span>
+                <span className="add-button">
+                    <Button className={classes.boxButton} variant="outlined" size="medium" onClick={() => props.handleScreen('add')}>Add Offer</Button>
+                </span>
+                <div className="offers-container">
+                    {
+                        offers.map(item => (
+                            <Card key={item.id} className={classes.cardStyle}>
+                                <CardActionArea>
+                                    <CardMedia
+                                        className={classes.mediaStyle}
+                                        image={logo}
+                                        title={item.name}
+                                    />
+                                    <CardContent>
+                                        <Typography variant="h5" gutterBottom>
+                                            {item.headline}
+                                        </Typography>
+                                        <Typography variant="body2">
+                                            {item.description}
+                                        </Typography>
+                                    </CardContent>
+                                </CardActionArea>
+                                <CardActions>
+                                    <Button className={classes.boxButton} size="small" color="primary" onClick={() => {
+                                        props.handleScreen('edit')
+                                        props.handleOfferData({ id: item._id, campaign_name: item.campaign_name, headline: item.headline, description: item.description })
+                                    }}>
+                                        Edit
+                                    </Button>
+                                    <Button className={classes.boxButton}
+                                        size="small"
+                                        color="primary"
+                                        onClick={() => {
+                                            deleteOffer(props.userData.token, item._id)
+                                        }}
+                                    >
+                                        Delete
+                                    </Button>
+                                </CardActions>
+                            </Card>
+                        ))
+                    }
+                </div>
             </div>
-        </div>
-    )
+        )
+
+    }
 }
 export default Offers
