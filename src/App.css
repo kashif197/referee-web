@@ -55,16 +55,44 @@
 
 .offers-container {
 
-  position: absolute;
-  left: 50%;
-  top: 50%;
+  /* position: absolute;
+  left: 15%;
+  top: 30%;
   transform: translate(-50%,-50%);
 
-  display: flex;
-  justify-content: center;
-
+  justify-content: center; */
+  /* background-color: #707070; */
+  margin-left: 90px;
+  margin-top: 90px;
+  display: flex; 
+  flex-wrap: wrap;
 }
 
 .add-button {
   float: right;
+  margin-top: 30px;
+}
+
+.nav {
+  background-color: #2EC4B6;
+  overflow: hidden;
+  width: 200px;
+
+}
+
+.nav-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links {
+  text-decoration: none;
+  color: #f2f2f2;
+  display: block;
+}
+
+.nav-links:link {
+  text-decoration: none!important;
+
 }

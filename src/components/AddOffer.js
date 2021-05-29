@@ -1,10 +1,11 @@
-import React from 'react';
-
+import React, {useContext} from 'react';
+import {useHistory } from 'react-router-dom'
 import 'fontsource-roboto';
 import { Button, Grid, IconButton, makeStyles, TextField } from '@material-ui/core';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { LoginContext } from '../contexts/LoginContext';
 
 const useStyles = makeStyles(theme => ({
     fieldStyle: {
@@ -36,7 +37,8 @@ const useStyles = makeStyles(theme => ({
 
 function AddOffer(props) {
     const classes = useStyles()
-
+    let history = useHistory()
+    const {data} = useContext(LoginContext)
     const [type, setType] = React.useState(true)
     const [campaignName, setCampaignName] = React.useState('')
     const [headline, setHeadline] = React.useState('')
@@ -63,10 +65,10 @@ function AddOffer(props) {
                     description: description
                 }),
             })
-                .then((res) => res.json())
-                .then((data) => {
+            .then((res) => res.json())
+            .then((data) => {
                     if (data.status) {
-                        props.handleScreen('offer')
+                        history.push('/offerBusiness')
                         alert('Offer Created')
                     }
                     else {
@@ -92,10 +94,10 @@ function AddOffer(props) {
                     description: description
                 }),
             })
-                .then((res) => res.json())
-                .then((data) => {
+            .then((res) => res.json())
+            .then((data) => {
                     if (data.status) {
-                        props.handleScreen('offer')
+                        history.push('/offerBusiness')
                         alert('Offer Created')
                     }
                     else {
@@ -131,7 +133,7 @@ function AddOffer(props) {
 
         <div className="add-container">
             <span className="back-button">
-                <IconButton onClick={() => props.handleScreen('offer')}>
+                <IconButton onClick={() => history.push('/offerBusiness')}>
                     <ArrowBackIcon />
                 </IconButton>
             </span>
@@ -158,7 +160,7 @@ function AddOffer(props) {
                     <TextField className={classes.descFieldStyle} variant="outlined" label="Description" onChange={handleDescription} />
                 </Grid>
                 <Grid item>
-                    <Button className={classes.buttonStyle} variant="outlined" onClick={() => addAttempt(props.userData.token, props.userData.id, campaignName, headline, type, commValue, target, description)}>
+                    <Button className={classes.buttonStyle} variant="outlined" onClick={() => addAttempt(data.token, data.id, campaignName, headline, type, commValue, target, description)}>
                         Submit
                         </Button>
                 </Grid>

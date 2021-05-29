@@ -94,7 +94,7 @@ function SignUp(props) {
 
     React.useEffect(() => {
         if (success) props.handleScreen('login')
-    }, [success])
+    })
 
     const signUpCustomerAttempt = (email, password, first_name, last_name, username, gender, contact) => {
 
@@ -148,11 +148,11 @@ function SignUp(props) {
         })
             .then(res => res.json())
             .then(data => {
-                if (data.status) alert('success')
+                if (data.status) {
+                    handleSuccess(true)
+                    alert('Account Created')
+                }
                 else alert(data.message)
-            })
-            .then(data => {
-                if (data.status) handleSuccess(true)
             })
             .catch(err => console.log(err))
 
@@ -207,6 +207,11 @@ function SignUp(props) {
     if (type === 'business') {
         return (
             <div className="signup-container">
+                <span className="back-button">
+                    <IconButton onClick={() => props.handleScreen('home')}>
+                        <ArrowBackIcon />
+                    </IconButton>
+                </span>
                 <Grid container spacing={2} direction="column" alignItems="center">
                     <Grid item>
                         <ToggleButtonGroup value={type} exclusive onChange={handleType}>

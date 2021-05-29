@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom'
+import { LoginContext } from '../contexts/LoginContext'
 
+import { IconButton, makeStyles } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
-
 import 'fontsource-roboto';
-import { IconButton, makeStyles } from '@material-ui/core';
-
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 
@@ -28,10 +28,37 @@ const useStyles = makeStyles(theme => ({
       backgroundColor: '#fff',
       border: '2px solid #2EC4B6'
     }
+  },
+  buttonStyleGoogle: {
+    width: '350px',
+    backgroundColor: '#FF3E30',
+    color: '#FFF',
+    fontFamily: 'Segoe UI',
+    fontWeight: 'bold',
+    // '&:hover': {
+    //   color: '#2EC4B6',
+    //   backgroundColor: '#fff',
+    //   border: '2px solid #2EC4B6'
+    // }
+  },
+  buttonStyleFacebook: {
+    width: '350px',
+    backgroundColor: '#3B5998',
+    color: '#FFF',
+    fontFamily: 'Segoe UI',
+    fontWeight: 'bold',
+    '&:hover': {
+      color: '#2EC4B6',
+      backgroundColor: '#fff',
+      border: '2px solid #2EC4B6'
+    }
   }
 }))
 
 function Login(props) {
+  let history = useHistory()
+  const { data, changeData, signInLocal, signInGoogle } = useContext(LoginContext) // State Context For User Information
+  const classes = useStyles()
 
   const validateData = (email, password) => {
     if (re.test(email)) {
@@ -41,52 +68,19 @@ function Login(props) {
     else setError(true)
   }
 
-  const loginAttempt = (email, password) => {
-    if (validateData(email, password)) {
-      fetch('http://localhost:5000/user/login', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password
-        })
-      })
-        .then(res => res.json())
-        .then(data => {
-          if (data.status === 0) {
-            alert(data.message)
-          }
-          else {
-            setUserData({
-              status: data.status,
-              name: data.name,
-              id: data.id,
-              token: data.token
-            })
-          }
-
-        })
-        .catch(err => console.log('There was no response from the server.'))
+  // Navigate After Data Is Updated
+  useEffect(
+    () => {
+      if (data !== '') {
+        history.push('/offerBusiness')
+      }
     }
+  );
 
-  }
-
-  const classes = useStyles()
 
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
-  const [userData, setUserData] = React.useState('abc')
   const [error, setError] = React.useState(false)
-
-  React.useEffect(() => {
-    if (userData.status) {
-      props.handleScreen('offer')
-      props.handleUserData(userData)
-    }
-  }, [userData])
 
   const handleEmail = (event) => {
     setEmail(event.target.value)
@@ -95,7 +89,7 @@ function Login(props) {
     setPassword(event.target.value)
   }
 
-  const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+  const re = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;  // Email Regex
 
   return (
     <div className="login-container">
@@ -116,7 +110,8 @@ function Login(props) {
         <Grid item>
           <Button className={classes.buttonStyle} variant="outlined"
             onClick={() => {
-              loginAttempt(email, password)
+              console.log('click')
+              signInLocal(email, password)
             }}
           >
             Login
@@ -124,6 +119,12 @@ function Login(props) {
         </Grid>
         <Grid item>
           <Button className={classes.buttonStyle} variant="outlined">Forgot Password</Button>
+        </Grid>
+        <Grid item>
+          <Button className={classes.buttonStyleGoogle} variant="outlined" onClick={() => {console.log('click');signInGoogle();}}>Login With Google</Button>
+        </Grid>
+        <Grid item>
+          <Button className={classes.buttonStyleFacebook} variant="outlined">Login With Facebook</Button>
         </Grid>
       </Grid>
     </div>

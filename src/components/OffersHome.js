@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card'
@@ -12,6 +12,11 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import 'fontsource-roboto';
 import { CardActionArea, CardContent, CardMedia, CardActions, IconButton } from '@material-ui/core';
+
+import Nav from '../components/Nav'
+import { LoginContext } from '../contexts/LoginContext'
+import { useHistory } from 'react-router-dom'
+
 
 const useStyles = makeStyles({
     cardStyle: {
@@ -29,7 +34,8 @@ const useStyles = makeStyles({
         backgroundColor: '#2EC4B6',
         fontFamily: 'Segoe UI',
         fontWeight: 'bold',
-        margin: 5,
+        marginTop: 10,
+        marginBottom: 7,
         '&:hover': {
             color: '#2EC4B6',
             backgroundColor: '#fff',
@@ -43,8 +49,11 @@ const useStyles = makeStyles({
 
 function Offers(props) {
 
-    const [offers, setOffers] = React.useState('')
     const classes = useStyles()
+    let history = useHistory()
+
+    const [offers, setOffers] = React.useState('')
+    const { data } = useContext(LoginContext) // State Context For User Information
 
     function deleteOffer(token, id) {
         fetch("http://localhost:5000/offer/deleteOffer/" + id, {
@@ -57,7 +66,7 @@ function Offers(props) {
             .then((Json) => {
                 if (Json.success) {
                     alert('Offer Deleted')
-                    getOffers(props.userData.id, props.userData.token)
+                    getOffers(data.id, data.token)
                 }
 
             })
@@ -65,6 +74,7 @@ function Offers(props) {
     }
 
     function getOffers(id, token) {
+        console.log('here2')
         fetch('http://localhost:5000/offer/find/' + id, {
             method: 'GET',
             headers: {
@@ -81,23 +91,23 @@ function Offers(props) {
     }
 
     if (offers === '') {
-        getOffers(props.userData.id, props.userData.token)
-
-
+        getOffers(data.id, data.token)
+        console.log('here1')
         return <div></div>
     }
 
     else {
         return (
             <div>
-                <span className="back-button">
-                    <IconButton onClick={() => props.handleScreen('home')}>
-                        <ArrowBackIcon />
-                    </IconButton>
-                </span>
-                <span className="add-button">
-                    <Button className={classes.boxButton} variant="outlined" size="medium" onClick={() => props.handleScreen('add')}>Add Offer</Button>
-                </span>
+                <Nav />
+                {/* <span className="back-button">
+                        <IconButton onClick={() => history.push('/home')}>
+                            <ArrowBackIcon />
+                        </IconButton>
+                    </span> */}
+                {/* <span className="add-button">
+                    <Button className={classes.boxButton} variant="outlined" size="medium" onClick={() => history.push('/addOffer')}>Add Offer</Button>
+                </span> */}
                 <div className="offers-container">
                     {
                         offers.map(item => (
@@ -119,8 +129,8 @@ function Offers(props) {
                                 </CardActionArea>
                                 <CardActions>
                                     <Button className={classes.boxButton} size="small" color="primary" onClick={() => {
-                                        props.handleScreen('edit')
-                                        props.handleOfferData({ id: item._id, campaign_name: item.campaign_name, headline: item.headline, description: item.description })
+                                        history.push('/editOffer')
+                                        // props.handleOfferData({ id: item._id, campaign_name: item.campaign_name, headline: item.headline, description: item.description })
                                     }}>
                                         Edit
                                     </Button>
@@ -128,7 +138,7 @@ function Offers(props) {
                                         size="small"
                                         color="primary"
                                         onClick={() => {
-                                            deleteOffer(props.userData.token, item._id)
+                                            deleteOffer(data.token, item._id)
                                         }}
                                     >
                                         Delete
@@ -137,10 +147,28 @@ function Offers(props) {
                             </Card>
                         ))
                     }
+                    <Card className={classes.cardStyle}>
+                        <CardActionArea onClick={() => history.push('/addOffer')}>
+                            <CardMedia
+                                className={classes.mediaStyle}
+                                image={logo}
+                                title={"Add A New Offer"}
+                            />
+                            <CardContent>
+                                <Typography variant="h5" align="center" gutterBottom >
+                                    {"Add A New Offer"}
+                                </Typography>
+
+                            </CardContent>
+                        </CardActionArea>
+                        <CardActions>
+                        </CardActions>
+                    </Card>
                 </div>
             </div>
-        )
-
+        );
     }
 }
+
+
 export default Offers

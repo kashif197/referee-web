@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {useHistory} from 'react-router-dom'
 
 import 'fontsource-roboto';
 import { Button, Grid, makeStyles, TextField } from '@material-ui/core';
+import { LoginContext } from '../contexts/LoginContext';
 
 const useStyles = makeStyles(theme => ({
     fieldStyle: {
@@ -30,10 +32,11 @@ const useStyles = makeStyles(theme => ({
 
 function EditOffer(props) {
     const classes = useStyles()
-
-    const [campaignName, setCampaignName] = React.useState(props.offerData.campaign_name)
-    const [headline, setHeadline] = React.useState(props.offerData.headline)
-    const [description, setDescription] = React.useState(props.offerData.description)
+    const {data} = useContext(LoginContext)
+    let history = useHistory()
+    const [campaignName, setCampaignName] = React.useState(data.campaign_name)
+    const [headline, setHeadline] = React.useState(data.headline)
+    const [description, setDescription] = React.useState(data.description)
 
 
     function editAttempt(token, id, name,  headline, description) {
@@ -52,7 +55,7 @@ function EditOffer(props) {
         })
             .then((res) => res.text())
             .then((Json) => {
-                props.handleScreen('offer')
+                history.push('/offerBusiness')
             })
             .catch((err) => console.log(err));
     }
@@ -74,16 +77,16 @@ function EditOffer(props) {
         <div className="add-container">
             <Grid container spacing={2} direction="column" alignItems="center">
                 <Grid item>
-                    <TextField className={classes.fieldStyle} defaultValue={props.offerData.campaign_name} variant="outlined" label="Campaign Name" onChange={handleCampaignName} />
+                    <TextField className={classes.fieldStyle} defaultValue={data.campaign_name} variant="outlined" label="Campaign Name" onChange={handleCampaignName} />
                 </Grid>
                 <Grid item>
-                    <TextField className={classes.fieldStyle} defaultValue={props.offerData.headline} variant="outlined" label="Headline" onChange={handleHeadline} />
+                    <TextField className={classes.fieldStyle} defaultValue={data.headline} variant="outlined" label="Headline" onChange={handleHeadline} />
                 </Grid>
                 <Grid item>
-                    <TextField className={classes.descFieldStyle} defaultValue={props.offerData.description} variant="outlined" label="Description" onChange={handleDescription} />
+                    <TextField className={classes.descFieldStyle} defaultValue={data.description} variant="outlined" label="Description" onChange={handleDescription} />
                 </Grid>
                 <Grid item>
-                    <Button className={classes.buttonStyle} variant="outlined" onClick={() => editAttempt(props.token, props.offerData.id, campaignName, headline, description)}>
+                    <Button className={classes.buttonStyle} variant="outlined" onClick={() => editAttempt(data.token, data.id, campaignName, headline, description)}>
                         Submit
                     </Button>
                 </Grid>

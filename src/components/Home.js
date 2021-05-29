@@ -1,5 +1,6 @@
 import { Button, makeStyles } from '@material-ui/core';
 import React from 'react';
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
     buttonStyle: {
@@ -18,10 +19,12 @@ const useStyles = makeStyles(theme => ({
 
 function Home(props) {
     const classes = useStyles()
+    let history = useHistory()
+
     return (
         <div className="button-container">
-          <Button className={classes.buttonStyle} size="large" variant="outlined" onClick={() => props.handleScreen('login')}>Login</Button>
-          <Button className={classes.buttonStyle} size="large" variant="outlined" onClick={() => props.handleScreen('register')}>Register</Button>
+          <Button className={classes.buttonStyle} size="large" variant="outlined" onClick={() => history.push('login')}>Login</Button>
+          <Button className={classes.buttonStyle} size="large" variant="outlined" onClick={() => history.push('register')}>Register</Button>
 
         </div>
     )
