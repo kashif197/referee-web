@@ -19,21 +19,33 @@
   transform: translate(-50%,-50%); 
 }
 
-.login-container {
-  border: 1px thin #707070;
-  border-radius: 30px;
+.login-main-container {
+  display: flex;
+  flex-direction: row;
+}
 
+.login-first-container {
+  background-color: #2EC4B6;
+  width: 60%;
+  flex: 3
+}
+
+.login-container {
+  /* border: 1px thin #707070;
+  border-radius: 30px;
   background-color: #FFF;
   width: 450px;
   height: 300px;
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%); */
 
   display: flex;
+  flex: 1;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 .signup-container {

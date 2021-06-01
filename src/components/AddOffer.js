@@ -39,7 +39,7 @@ function AddOffer(props) {
     const classes = useStyles()
     let history = useHistory()
     const {data} = useContext(LoginContext)
-    const [type, setType] = React.useState(true)
+    const [type, setType] = React.useState(false)
     const [campaignName, setCampaignName] = React.useState('')
     const [headline, setHeadline] = React.useState('')
     const [commValue, setCommValue] = React.useState(0)
@@ -47,7 +47,37 @@ function AddOffer(props) {
     const [description, setDescription] = React.useState('')
 
     function addAttempt(token, id, campaign_name, headline, commission_based, commission_value, target_transaction, description) {
-        if (type) {
+        // if (type) {
+        //     fetch("http://localhost:5000/offer/addOffer", {
+        //         method: "POST",
+        //         headers: {
+        //             "Authorization": "Bearer " + token,
+        //             "Accept": "application/json",
+        //             "Content-Type": "application/json",
+        //         },
+        //         body: JSON.stringify({
+        //             business_id: id,
+        //             campaign_name: campaign_name,
+        //             headline: headline,
+        //             commission_based: commission_based,
+        //             commission_value: commission_value,
+        //             target_transaction: target_transaction,
+        //             description: description
+        //         }),
+        //     })
+        //     .then((res) => res.json())
+        //     .then((data) => {
+        //             if (data.status) {
+        //                 history.push('/offerBusiness')
+        //                 alert('Offer Created')
+        //             }
+        //             else {
+        //                 alert(data.message)
+        //             }
+        //         })
+        //         .catch((err) => console.log(err));
+        // }
+        // else {
             fetch("http://localhost:5000/offer/addOffer", {
                 method: "POST",
                 headers: {
@@ -60,7 +90,6 @@ function AddOffer(props) {
                     campaign_name: campaign_name,
                     headline: headline,
                     commission_based: commission_based,
-                    commission_value: commission_value,
                     target_transaction: target_transaction,
                     description: description
                 }),
@@ -76,36 +105,7 @@ function AddOffer(props) {
                     }
                 })
                 .catch((err) => console.log(err));
-        }
-        else {
-            fetch("http://localhost:5000/offer/addOffer", {
-                method: "POST",
-                headers: {
-                    "Authorization": "Bearer " + token,
-                    "Accept": "application/json",
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    business_id: id,
-                    campaign_name: campaign_name,
-                    headline: headline,
-                    commission_based: commission_based,
-                    target_transaction: target_transaction,
-                    description: description
-                }),
-            })
-            .then((res) => res.json())
-            .then((data) => {
-                    if (data.status) {
-                        history.push('/offerBusiness')
-                        alert('Offer Created')
-                    }
-                    else {
-                        alert(data.message)
-                    }
-                })
-                .catch((err) => console.log(err));
-        }
+        // }
 
 
     }
@@ -133,26 +133,26 @@ function AddOffer(props) {
 
         <div className="add-container">
             <span className="back-button">
-                <IconButton onClick={() => history.push('/offerBusiness')}>
+                {/* <IconButton onClick={() => history.push('/offerBusiness')}>
                     <ArrowBackIcon />
-                </IconButton>
+                </IconButton> */}
             </span>
             <Grid container spacing={2} direction="column" alignItems="center">
-                <Grid item>
+                {/* <Grid item>
                     <ToggleButtonGroup value={type} exclusive onChange={handleType}>
                         <ToggleButton className={classes.toggleStyle} value={true}>Commission</ToggleButton>
                         <ToggleButton className={classes.toggleStyle} value={false}>Non-Commission</ToggleButton>
                     </ToggleButtonGroup>
-                </Grid>
+                </Grid> */}
                 <Grid item>
                     <TextField className={classes.fieldStyle} variant="outlined" label="Campaign Name" onChange={handleCampaignName} />
                 </Grid>
                 <Grid item>
                     <TextField className={classes.fieldStyle} variant="outlined" label="Headline" onChange={handleHeadline} />
                 </Grid>
-                <Grid item>
+                {/* <Grid item>
                     <TextField className={classes.fieldStyle} disabled={!type} variant="outlined" label="Commission Value" onChange={handleCommValue} />
-                </Grid>
+                </Grid> */}
                 <Grid item>
                     <TextField className={classes.fieldStyle} variant="outlined" label="Target Transaction" onChange={handleTarget} />
                 </Grid>

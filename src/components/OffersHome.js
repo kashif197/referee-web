@@ -158,11 +158,8 @@ function Offers(props) {
                                 <Typography variant="h5" align="center" gutterBottom >
                                     {"Add A New Offer"}
                                 </Typography>
-
                             </CardContent>
                         </CardActionArea>
-                        <CardActions>
-                        </CardActions>
                     </Card>
                 </div>
             </div>

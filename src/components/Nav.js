@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: "flex"
     },
-    topBar : {
+    topBar: {
         display: "flex",
         justifyContent: "space-between"
     },
@@ -137,7 +137,7 @@ function Nav() {
                 })}
             >
                 <Toolbar className={classes.topBar}>
-                    <div style={{display: 'flex'}}>
+                    <div style={{ display: 'flex' }}>
                         <IconButton
                             color="inherit"
                             aria-label="open drawer"
@@ -153,7 +153,7 @@ function Nav() {
                             <img alt="" style={{ marginTop: '8px', width: '180px', height: '43px' }} src={logo} />
                         </Typography>
                     </div>
-                    <Avatar alt="" style={{marginTop: '5px', marginRight: "10px" }} src="https://lh3.googleusercontent.com/TwHrwftk8BaWEV4swcWDtdcg1halIcT2U3EWkXYkDyYPXmufMLtn1DJG569HIIsd4ty4=s630-fcrop64=1,2202423de15ce329" />
+                    <Avatar alt="" style={{ marginTop: '5px', marginRight: "10px" }} src="https://lh3.googleusercontent.com/TwHrwftk8BaWEV4swcWDtdcg1halIcT2U3EWkXYkDyYPXmufMLtn1DJG569HIIsd4ty4=s630-fcrop64=1,2202423de15ce329" />
 
                 </Toolbar>
             </AppBar>
@@ -183,12 +183,12 @@ function Nav() {
                 <List>
                     <Link to="/offerBusiness" style={{ textDecoration: 'none' }}>
 
-                    <ListItem button>
-                        <ListItemIcon>
-                            <HomeIcon htmlColor={"#fff"} />
-                        </ListItemIcon>
-                        <ListItemText primary={"Home"} className={classes.textStyle} />
-                    </ListItem>
+                        {/* <ListItem button>
+                            <ListItemIcon>
+                                <HomeIcon htmlColor={"#fff"} />
+                            </ListItemIcon>
+                            <ListItemText primary={"Home"} className={classes.textStyle} />
+                        </ListItem> */}
 
                         <ListItem button>
                             <ListItemIcon>
@@ -197,29 +197,31 @@ function Nav() {
                             <ListItemText primary={"My Offers"} className={classes.textStyle} />
                         </ListItem>
                     </Link>
+                    <Link to="/settings" style={{ textDecoration: 'none' }}>
 
-                    <ListItem button>
-                        <ListItemIcon>
-                            <SettingsIcon htmlColor={"#fff"} />
-                        </ListItemIcon>
-                        <ListItemText primary={"Settings"} className={classes.textStyle} />
-                    </ListItem>
-
+                        <ListItem button>
+                            <ListItemIcon>
+                                <SettingsIcon htmlColor={"#fff"} />
+                            </ListItemIcon>
+                            <ListItemText primary={"Settings"} className={classes.textStyle} />
+                        </ListItem>
+                    </Link>
                     <ListItem button>
                         <ListItemIcon>
                             <HeadsetMicIcon htmlColor={"#fff"} />
                         </ListItemIcon>
                         <ListItemText primary={"Support"} className={classes.textStyle} />
                     </ListItem>
+                    <Link to="/analytics" style={{ textDecoration: 'none' }}>
 
-                    
-                    <ListItem button>
-                        <ListItemIcon>
-                            <TrendingUpIcon htmlColor={"#fff"} />
-                        </ListItemIcon>
-                        <ListItemText primary={"Analytics"} className={classes.textStyle} />
-                    </ListItem>
 
+                        <ListItem button>
+                            <ListItemIcon>
+                                <TrendingUpIcon htmlColor={"#fff"} />
+                            </ListItemIcon>
+                            <ListItemText primary={"Analytics"} className={classes.textStyle} />
+                        </ListItem>
+                    </Link>
                     <ListItem button>
                         <ListItemIcon>
                             <ExitToAppIcon htmlColor={"#fff"} />

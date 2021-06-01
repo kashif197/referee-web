@@ -23,17 +23,19 @@ const LoginContextProvider = (props) => {
         });
 
     function signInGoogle() {
-        fetch('http://localhost:5000/user/google', {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            }
-            // body: JSON.stringify({
-            //     email: email,
-            //     password: password
-            // })
-        })
+        window.open("http://localhost:5000/user/google", "_self");
+        // fetch('http://localhost:5000/user/google', {
+        //     method: 'GET',
+        //     credentials: "include",
+        //     headers: {
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json',
+        //     }
+        //     // body: JSON.stringify({
+        //     //     email: email,
+        //     //     password: password
+        //     // })
+        // })
     }
 
     function signInLocal(email, password) {
